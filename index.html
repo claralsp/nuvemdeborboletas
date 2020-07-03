@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="imgs/torre.png" />
+    <title>Castelo</title>
+    
+    <style>
+        body {
+            background-image: url(imgs/castelo.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            overflow: hidden;
+            min-height: 100vh;
+        }
+        img {
+           position: absolute;
+           height: auto;
+           width: auto;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="borboletas">
+
+    </div>
+    <button class="btn btn-info" id="novo">+ BORBOLETAS</button>
+
+    <script>
+        class Borboleta {
+            constructor() {
+                this.x = -12;
+                this.y = -82;
+                this.baseY = Math.random() * 333;
+                this.velocidadeX = Math.random() * 1 + 2;
+                this.el = document.createElement('img');
+                this.el.src = 'imgs/voa.gif';
+                this.el.alt = 'Borboleta';
+                document.querySelector('#borboletas').appendChild(this.el);
+            }
+
+            voar() {
+                this.x += this.velocidadeX;
+                this.y = this.baseY + Math.cos(this.x / 40) * 5;
+
+                if (this.x >= window.innerWidth) {
+                    this.x = -100;
+                    this.baseY = Math.random() * 50;
+                }
+                this.el.style.transform = `translate(${this.x}px, ${this.y}px)`;
+            }
+        }
+
+        let borboletas = [new Borboleta(), new Borboleta(), new Borboleta()];
+        setInterval(() => {
+            for (let i = 0; i < borboletas.length; i++) {
+                borboletas[i].voar();
+            }
+        }, 33);
+
+        let novoEl = document.querySelector('#novo');
+        novoEl.addEventListener('click', () => {
+            borboletas.push(new Borboleta());
+        });
+        
+    </script>
+</body>
+</html>
